@@ -3,4 +3,4 @@
 
 **The URL to your participation repo** (https://github.com/jdewstewart/STAT545-participation)
 
-**The URL to your user account page**
+**The URL to your user account page** (https://github.com/jdewstewart)
