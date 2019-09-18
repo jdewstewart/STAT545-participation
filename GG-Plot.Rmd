@@ -1,0 +1,70 @@
+---
+title: "GG-Plot"
+output: pdf_document
+---
+
+```
+install.packages("tidyverse")
+install.packages("scales")
+install.packages("tsibble")
+```
+
+```{r load packages, warning = FALSE}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(scales))
+knitr::opts_chunk$set(fig.width = 5, fig.height = 2, fig.align = "center")
+```
+
+
+Consider the following plot. Don't concern yourself with the code at this point.
+
+```{r, fig.width = 5, fig.height = 2}
+gapminder %>% 
+  filter(year == 2007) %>% 
+  mutate(continent = fct_infreq(continent)) %>% 
+  ggplot(aes(continent)) +
+  geom_bar() +
+  theme_bw()
+```
+
+Fill in the seven grammar components for this plot.
+
+| Grammar Component     | Specification |
+|-----------------------|---------------|
+| __data__              | `gapminder` |
+| __aesthetic mapping__ | x = continent, y = count |
+| __geometric object__  | bars |
+| scale                 | Linear |
+| statistical transform | count |
+| coordinate system     | rectangular |
+| facetting             | no |
+
+
+```
+mauna <- tsibble::as_tsibble(co2) %>% 
+   rename(month = index, conc = value)
+```
+Produce a line chart showing the concentration over time. Specifically, the plot should have the following grammar components:
+
+| Grammar Component     | Specification |
+|-----------------------|---------------|
+| __data__              | `mauna` |
+| __aesthetic mapping__ | x: month, y: conc |
+| __geometric object__  | lines |
+| scale                 | linear |
+| statistical transform | none |
+| coordinate system     | rectangular |
+| facetting             | none |
+
+Fill in the blanks to obtain the plot:
+
+```{r, fig.width = 5, fig.height = 2}
+ggplot(mauna, aes(month, conc)) +
+  geom_line()
+```
+
+```{r, fig.width = 5, fig.height = 2}
+ggplot(mauna) +
+  geom_point(aes(x = month, y = conc))
+```
