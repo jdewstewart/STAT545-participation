@@ -1,6 +1,8 @@
 ---
-title: 'cm006: `dplyr` Exercise'
-output: html_notebook
+title: cm006: 'dplyr' Exercise
+output: 
+  html_document:
+    keep_md: true
 editor_options: 
   chunk_output_type: inline
 ---
@@ -9,7 +11,6 @@ editor_options:
 ```{r allow errors, echo = FALSE}
 knitr::opts_chunk$set(error = TRUE)
 ```
-test 2 - 3
 
 **Optional, but recommended startup**:
 
@@ -26,8 +27,8 @@ Load the `gapminder` and `tidyverse` packages. Hint: `suppressPackageStartupMess
     
 ```{r load packages, warning = FALSE, message = FALSE}
 # load your packages here:
-library(FILL_THIS_IN)
-library(FILL_THIS_IN)
+library(gapminder)
+library(tidyverse)
 ```
     
 
@@ -36,7 +37,7 @@ library(FILL_THIS_IN)
 1. Make a data frame containing the columns `year`, `lifeExp`, `country` from the gapminder data, in that order.
 
 ```{r}
-select(gapminder, FILL_THIS_IN)
+select(gapminder, country, continent, year, lifeExp)
 ```
 
 
@@ -47,7 +48,7 @@ select(gapminder, FILL_THIS_IN)
 select(gapminder, country, continent, year, lifeExp)
 
 # Better way:
-select(gapminder, FILL_THIS_IN)
+select(gapminder, country:lifeExp)
 ```
 
 
@@ -70,7 +71,7 @@ select(gapminder, FILL_THIS_IN, FILL_THIS_IN)
 # compare
 select(gapminder, FILL_THIS_IN)
 
-rename(gapminder, FILL_THIS_IN)
+rename(gapminder, continent, cont)
 ```
 
 
@@ -79,19 +80,19 @@ rename(gapminder, FILL_THIS_IN)
 1. Order by year.
 
 ```{r}
-arrange(gapminder, FILL_THIS_IN)
+arrange(gapminder, year)
 ```
 
 2. Order by year, in descending order.
 
 ```{r}
-arrange(gapminder, FILL_THIS_IN)
+arrange(gapminder, desc(year))
 ```
 
 3. Order by year, then by life expectancy.
 
 ```{r}
-arrange(gapminder, FILL_THIS_IN, FILL_THIS_IN)
+arrange(gapminder, year, lifeExp)
 ```
 
 ## Piping, `%>%` (8 min)
@@ -109,7 +110,17 @@ This is how I could do it by *nesting* the two function calls:
 arrange(select(gapminder, year, lifeExp, country), year, lifeExp)
 ```
 
-Now using with pipes:
+# think of pipes as the word "then"
+# Now using with pipes:
+
+```{r}
+gapmimder %>%
+  select(year, lifeExp, country) %>%
+  arrange(year, lifeExp)
+```
+
+
+
 
 ```{r}
 # alter the below to include 2 "pipes"
@@ -126,21 +137,23 @@ Return to guide at section 6.7.
 
 ```{r}
 gapminder %>%
-  filter(FILL_THIS_IN)
+  filter(pop > 100000000)
 ```
 
 2. Your turn: of those rows filtered from step 1., only take data from Asia.
 
 ```{r}
 gapminder %>%
-  filter(FILL_THIS_IN)
+  filter(pop > 100000000) %>%
+  filter(continent == 'Asia')
 ```
 
 3. Repeat 2, but take data from countries Brazil, and China. 
 
 ```{r}
 gapminder %>%
-  filter(FILL_THIS_IN)
+  filter(pop > 100000000) %>%
+  filter(country == 'Brazil' | country == 'China')
 ```
 
 ## `mutate()` (10 min)
@@ -152,7 +165,7 @@ Let's get:
 
 ```{r}
 gapminder %>%
-  mutate(FILL_THIS_IN)
+  mutate(gdpBill = round(gdpPercap*pop/1000000000, digits = 2))
 ```
 
 Notice the backwards compatibility! No need for loops!
@@ -161,7 +174,7 @@ Try the same thing, but with `transmute` (drops all other variables).
 
 ```{r}
 gapminder %>%
-  transmute(FILL_THIS_IN)
+  transmute(gdpBill = gdpPercap*pop/1000000000)
 ```
 
 The `if_else` function is useful for changing certain elements in a data frame.
@@ -170,12 +183,13 @@ Example: Suppose Canada's 1952 life expectancy was mistakenly entered as 68.8 in
 
 ```{r}
 gapminder %>%
-  mutate(FILL_THIS_IN)
+  mutate(lifeExp = if_else(country == 'Canada' & year == 1952, 70, lifeExp))
 ```
 
 Your turn: Make a new column called `cc` that pastes the country name followed by the continent, separated by a comma. (Hint: use the `paste` function with the `sep=", "` argument).
 
 ```{r}
+
 ```
 
 These functions we've seen are called __vectorized functions__.
