@@ -1,11 +1,13 @@
----
+
+
 title: cm006: 'dplyr' Exercise
 output: 
   html_document:
     keep_md: true
 editor_options: 
   chunk_output_type: inline
----
+
+
 <!---The following chunk allows errors when knitting--->
 
 ```{r allow errors, echo = FALSE}
