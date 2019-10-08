@@ -1,0 +1,23 @@
+---
+title: "Cm011_demo"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(here)
+```
+
+```{r}
+data_url <- "http://gattonweb.uky.edu/sheather/book/docs/datasets/GreatestGivers.xls"
+```
+
+#Old way
+download.file(url = data_url, destfile = paste('./datasets/', file_name))
+
+```{r}
+download.file(url = data_url, destfile = here::here("test", "greatestGivers.xls"))
+```
