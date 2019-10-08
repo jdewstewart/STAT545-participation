@@ -21,3 +21,35 @@ download.file(url = data_url, destfile = paste('./datasets/', file_name))
 ```{r}
 download.file(url = data_url, destfile = here::here("test", "greatestGivers.xls"))
 ```
+
+
+
+```{r}
+library(readxl)
+philanthropists <- read_excel(here::here("test", "greatestGivers.xls"), trim_ws = TRUE)
+
+View(philanthropists)
+```
+
+
+
+```{r}
+mri_file = here("Firas-MRI.xlsx")
+```
+
+```{r}
+library(readxl)
+```
+
+```{r}
+mri <- read_excel(mri_file)
+```
+```{r}
+view(mri)
+```
+
+```
+
+
+
+
