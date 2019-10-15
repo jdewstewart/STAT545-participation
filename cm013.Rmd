@@ -3,8 +3,15 @@ title: "Cm013"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r allow errors, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE, warning = FALSE)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(gapminder)
+library(ggridges)
+library(scales)
 ```
 
 # Effective Visualizations
@@ -37,10 +44,10 @@ Note, there will be very little coding in-class today, but I've given you plenty
 
 Write some notes here about what "effective visualizations" means to you. Think of elements of good graphics and plots that you have seen - what makes them good or bad? Write 3-5 points.
 
-1. 
-1. 
-1. 
-1. 
+1. minimalist style
+1. clear labelling
+1. colour to help with multi-categories
+1. start axes at appropriate place
 1.
 
 ### CQ01: Weekly hours for full-time employees
@@ -100,6 +107,22 @@ Did you know that you can make interactive graphs and plots in R using the plotl
 
 This is a preview of what we'll be doing in STAT 547 - making dynamic and interactive dashboards using R!
 
+```{r}
+install.packages('plotly')
+install.packages('data.table')
+
+```
+```{r}
+library(plotly)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(gapminder)
+
+```
 ## Supplemental worksheet (Optional)
 
 You are highly encouraged to the cm013 supplemental exercises worksheet. It is a great guide that will take you through Scales, Colours, and Themes in ggplot. There is also a short guided activity showing you how to make a ggplot interactive using plotly.
