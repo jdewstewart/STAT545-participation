@@ -94,17 +94,18 @@ Exercise:
 
 First, create a subset of the `gapminder` dataset containing only the country of `France
 ```{r}
-(gapminder_France <- FILL_THIS_IN
+gapminder_France <- gapminder %>% 
+   filter(country == "France")
 ```
 
 Now, using the `lm()` function we will create the linear model
 ```{r}
-(my_lm <- lm(FILL_THIS_IN))
+(my_lm <- lm(lifeExp ~ year, data = gapminder_France))
 ```
 Does that mean that the life expectency at "year 0" was equal to -397.7646?!
 We are interested in the modeling results around the modeling period which starts at year 1952. To get a meaniningful "interpretable" intercept we can use the `I()` function.
 ```{r}
-(my_lm <- lm(FILL_THIS_IN))
+(my_lm <- lm(lifeExp ~ I(year-1952),data = gapminder_France))
 ```
 
 Use the `unclass()` function to take a look at how the `lm()` object actually looks like.
@@ -117,11 +118,24 @@ To complicate things further, some info is stored in _another_ list after applyi
 ```{r}
 summary(my_lm)
 ```
+```{r}
+my_lm_resid <- augment(my_lm)
+```
+
+
+```{r}
+ggplot(my_lm_resid, aes(.resid)) +
+  geom_freqpoly(binwidth =0.5)
+```
+
+
+
 
 We can use the `predict()` function to make predictions from the model (default is to use fitting/training data). Here are the predictions:
 
 ```{r}
-predict(my_lm) %>% 
+gapminder_France2 <- data.frame(year = seq(2000,2005))
+predict(my_lm, newdata = gapminder_France2) %>% 
   head()
 ```
 Or we can predict on a new dataset:
@@ -130,7 +144,10 @@ years1 = FILL_THIS_IN
 predict(my_lm,years1)
 ```
 
+```{r}
+plot(my_lm)
 
+```
 
 We can plot models (with one predictor/ X variable) using `ggplot2` through the `geom_smooth()` layer. Specifying `method="lm"` gives us the linear regression fit (but only visually!):
 
